@@ -1,0 +1,15 @@
+body {
+    overflow: hidden;
+}
+
+#preloader {
+    background: black url('./image/bulbasaur-pokemon.gif') no-repeat center center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 100;
+}
+
+#none {
+    display: none;
+}
