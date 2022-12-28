@@ -5,7 +5,7 @@ const Search = (props) => {
   const [input, setInput] = useState("");
 
   const handleChange = (e) => {
-    setInput(e.target.value);
+    setInput(e.target.value.toLowerCase());
   };
 
   const handleSubmit = (e) => {
