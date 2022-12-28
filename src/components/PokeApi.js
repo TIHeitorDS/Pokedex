@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pokedex from "./Pokedex";
 
 const PokeApi = () => {
@@ -10,29 +10,15 @@ const PokeApi = () => {
   }, []);
 
   const getPokemons = () => {
-    let data = [];
+    let endpoints = [];
     for (let i = 1; i <= 150; i++) {
-      data.push(`https://pokeapi.co/api/v2/pokemon/${i}`);
+      endpoints.push(axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`));
     }
 
-    const response = axios
-      .all(data.map((id) => axios.get(id)))
-      .then((result) => setPokemons(result));
-    return response;
+    return axios.all(endpoints).then((result) => setPokemons(result));
   };
 
-  return (
-    <div className="columns is-mobile is-multiline is-justify-content-center is-align-items-start">
-      {pokemons.map((pokemon, index) => (
-        <Fragment key={index}>
-          <Pokedex
-            img={pokemon.data.sprites.front_default}
-            name={pokemon.data.name}
-          />
-        </Fragment>
-      ))}
-    </div>
-  );
+  return <Pokedex pokemons={pokemons} />;
 };
 
 export default PokeApi;
