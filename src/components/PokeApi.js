@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Pokedex from "./Pokedex";
+import Search from "./Search";
 
 const PokeApi = () => {
   const [pokemons, setPokemons] = useState([]);
@@ -18,7 +19,24 @@ const PokeApi = () => {
     return axios.all(endpoints).then((result) => setPokemons(result));
   };
 
-  return <Pokedex pokemons={pokemons} />;
+  const filterPokemon = (name) => {
+    let poke = [];
+    if (name === "") return getPokemons();
+    for (const pokemon of pokemons) {
+      if (pokemon.data.name.includes(name)) {
+        poke.push(pokemon);
+      }
+    }
+
+    setPokemons(poke);
+  };
+
+  return (
+    <Fragment>
+      <Search filterPokemon={filterPokemon} />
+      <Pokedex pokemons={pokemons} />
+    </Fragment>
+  );
 };
 
 export default PokeApi;
